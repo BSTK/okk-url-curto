@@ -30,7 +30,7 @@ class UrlResourceTest {
     @Test
     @DisplayName("[ POST ] - Deve retotnar uma url encurtada valida")
     void deveRetotnarUmaUrlValida() throws Exception {
-        final String url = "https:www.google.com.br/hahhskka/skksjja-oosj";
+        final String url = "https://www.google.com.br/hahhskka/skksjja-oosj";
 
         mockMvc.perform(
                 post(ENDPOINT_API_V1_URL)
@@ -53,15 +53,29 @@ class UrlResourceTest {
     @Test
     @DisplayName("[ POST ] - Deve retotnar erro de validacao dado uma url invalida")
     void deveRetotnarUmErroDeValidacaoDadoUmaUrlInvalida() throws Exception {
-        final UrlRequest request = new UrlRequest();
-        request.setUrl("www.google.");
-
         mockMvc.perform(
                 post(ENDPOINT_API_V1_URL)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(
                         mapper.writeValueAsString(
                             mockRequest("www.google.")
+                        )
+                    )
+            )
+            .andExpect(status().isBadRequest())
+            .andExpect(jsonPath("$.url_original").doesNotExist())
+            .andExpect(jsonPath("$.url_encurtada").doesNotExist());
+    }
+
+    @Test
+    @DisplayName("[ POST ] - Deve retotnar erro de validacao dado uma url com tamanho minimo")
+    void deveRetotnarUmErroDeValidacaoDadoUmaUrlComTamanhoMinimo() throws Exception {
+        mockMvc.perform(
+                post(ENDPOINT_API_V1_URL)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(
+                        mapper.writeValueAsString(
+                            mockRequest("https://www.google.com.br")
                         )
                     )
             )
