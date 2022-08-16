@@ -30,19 +30,22 @@ class UrlResourceTest {
     @Test
     @DisplayName("[ POST ] - Deve retotnar uma url encurtada valida")
     void deveRetotnarUmaUrlValida() throws Exception {
-        final UrlRequest request = new UrlRequest();
-        request.setUrl("www.google.com.br/hahhskka/skksjja-oosj");
+        final String url = "https:www.google.com.br/hahhskka/skksjja-oosj";
 
         mockMvc.perform(
                 post(ENDPOINT_API_V1_URL)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(mapper.writeValueAsString(request))
+                    .content(
+                        mapper.writeValueAsString(
+                            mockRequest(url)
+                        )
+                    )
             )
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.url_original").isString())
             .andExpect(jsonPath("$.url_original").isNotEmpty())
-            .andExpect(jsonPath("$.url_original").value(request.getUrl()))
+            .andExpect(jsonPath("$.url_original").value(url))
             .andExpect(jsonPath("$.url_encurtada").isNotEmpty())
             .andExpect(jsonPath("$.url_encurtada").isNotEmpty());
     }
@@ -56,10 +59,21 @@ class UrlResourceTest {
         mockMvc.perform(
                 post(ENDPOINT_API_V1_URL)
                     .contentType(MediaType.APPLICATION_JSON)
-                    .content(mapper.writeValueAsString(request))
+                    .content(
+                        mapper.writeValueAsString(
+                            mockRequest("www.google.")
+                        )
+                    )
             )
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.url_original").doesNotExist())
             .andExpect(jsonPath("$.url_encurtada").doesNotExist());
+    }
+
+    private UrlRequest mockRequest(final String url) {
+        final UrlRequest request = new UrlRequest();
+        request.setUrl(url);
+
+        return request;
     }
 }
