@@ -7,6 +7,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.UUID;
 
 @RestController
@@ -18,7 +19,7 @@ public class UrlResource {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<UrlResponse> encurtar(@RequestBody final UrlRequest request) {
+    public ResponseEntity<UrlResponse> encurtar(@RequestBody @Valid final UrlRequest request) {
         final UrlResponse response = new UrlResponse(
             request.getUrl(),
             String.format("%s/%s", okkUrl, UUID.randomUUID().toString().split("-")[0])
@@ -26,4 +27,6 @@ public class UrlResource {
 
         return ResponseEntity.ok(response);
     }
+
+
 }
