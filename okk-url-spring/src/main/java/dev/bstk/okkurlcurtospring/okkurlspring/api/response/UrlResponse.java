@@ -23,4 +23,9 @@ public class UrlResponse implements Serializable {
     @NotNull
     @JsonProperty("url_encurtada")
     private final String urlEncurtada;
+
+    @URL
+    @NotNull
+    @JsonProperty("url_qr_code")
+    private final String urlQRCode;
 }
