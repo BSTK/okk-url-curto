@@ -12,6 +12,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
@@ -19,13 +20,14 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @ExtendWith(SpringExtension.class)
 class UrlResourceTest {
 
-    private static final String ENDPOINT_API_V1_URL = "/url";
+    private static final String ENDPOINT_ENCURTAR_URL = "/url";
+    private static final String ENDPOINT_REDIRECIONAR_URL = "/{url_id}";
+
+    private static final ObjectMapper MAPPER = new ObjectMapper();
+
 
     @Autowired
     private MockMvc mockMvc;
-
-    @Autowired
-    private ObjectMapper mapper;
 
     @Test
     @DisplayName("[ POST ] - Deve retotnar uma url encurtada valida")
@@ -33,10 +35,10 @@ class UrlResourceTest {
         final String url = "https://www.google.com.br/hahhskka/skksjja-oosj";
 
         mockMvc.perform(
-                post(ENDPOINT_API_V1_URL)
+                post(ENDPOINT_ENCURTAR_URL)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(
-                        mapper.writeValueAsString(
+                        MAPPER.writeValueAsString(
                             mockRequest(url)
                         )
                     )
@@ -54,10 +56,10 @@ class UrlResourceTest {
     @DisplayName("[ POST ] - Deve retotnar erro de validacao dado uma url invalida")
     void deveRetotnarUmErroDeValidacaoDadoUmaUrlInvalida() throws Exception {
         mockMvc.perform(
-                post(ENDPOINT_API_V1_URL)
+                post(ENDPOINT_ENCURTAR_URL)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(
-                        mapper.writeValueAsString(
+                        MAPPER.writeValueAsString(
                             mockRequest("www.google.")
                         )
                     )
@@ -71,10 +73,10 @@ class UrlResourceTest {
     @DisplayName("[ POST ] - Deve retotnar erro de validacao dado uma url com tamanho minimo")
     void deveRetotnarUmErroDeValidacaoDadoUmaUrlComTamanhoMinimo() throws Exception {
         mockMvc.perform(
-                post(ENDPOINT_API_V1_URL)
+                post(ENDPOINT_ENCURTAR_URL)
                     .contentType(MediaType.APPLICATION_JSON)
                     .content(
-                        mapper.writeValueAsString(
+                        MAPPER.writeValueAsString(
                             mockRequest("https://www.google.com.br")
                         )
                     )
@@ -82,6 +84,15 @@ class UrlResourceTest {
             .andExpect(status().isBadRequest())
             .andExpect(jsonPath("$.url_original").doesNotExist())
             .andExpect(jsonPath("$.url_encurtada").doesNotExist());
+    }
+
+    @Test
+    @DisplayName("[ GET ] - Deve redireceionar de uma url curta para url longa")
+    void deveRedireceionarDeUmaUrlCurtaParaUrlLonga() throws Exception {
+        mockMvc.perform(
+                get(ENDPOINT_REDIRECIONAR_URL, "asLkjk"))
+            .andExpect(status().isMovedPermanently())
+            .andExpect(redirectedUrl("https://www.uol.com.br"));
     }
 
     private UrlRequest mockRequest(final String url) {
