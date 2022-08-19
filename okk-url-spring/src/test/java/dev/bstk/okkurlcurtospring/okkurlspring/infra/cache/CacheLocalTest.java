@@ -5,7 +5,7 @@ import org.junit.jupiter.api.*;
 
 class CacheLocalTest {
 
-    private Cache cache;
+    private GerenciadorCache cache;
 
     @BeforeEach
     void setUp() {

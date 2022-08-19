@@ -1,4 +1,4 @@
-package dev.bstk.okkurlcurtospring.okkurlspring.domain.hanlerexception.exception;
+package dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.exception;
 
 public class UrlTokenException extends RuntimeException {
 

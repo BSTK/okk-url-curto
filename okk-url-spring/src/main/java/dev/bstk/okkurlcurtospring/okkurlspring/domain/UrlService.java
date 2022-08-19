@@ -4,8 +4,8 @@ import dev.bstk.okkurlcurtospring.okkurlspring.api.request.UrlRequest;
 import dev.bstk.okkurlcurtospring.okkurlspring.domain.data.Url;
 import dev.bstk.okkurlcurtospring.okkurlspring.domain.data.UrlRepository;
 import dev.bstk.okkurlcurtospring.okkurlspring.domain.encoder.Encoder;
-import dev.bstk.okkurlcurtospring.okkurlspring.domain.hanlerexception.exception.UrlTokenException;
-import dev.bstk.okkurlcurtospring.okkurlspring.infra.cache.Cache;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.exception.UrlTokenException;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.cache.GerenciadorCache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
@@ -32,7 +32,7 @@ public class UrlService {
     @Qualifier("EncoderQrCode")
     private final Encoder<String> urlQrCode;
 
-    private final Cache cache;
+    private final GerenciadorCache cache;
     private final UrlRepository repository;
 
 

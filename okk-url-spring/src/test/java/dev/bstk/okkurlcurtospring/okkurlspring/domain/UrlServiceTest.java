@@ -2,7 +2,7 @@ package dev.bstk.okkurlcurtospring.okkurlspring.domain;
 
 import dev.bstk.okkurlcurtospring.okkurlspring.api.request.UrlRequest;
 import dev.bstk.okkurlcurtospring.okkurlspring.domain.data.UrlRepository;
-import dev.bstk.okkurlcurtospring.okkurlspring.infra.cache.Cache;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.cache.GerenciadorCache;
 import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
@@ -14,7 +14,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 class UrlServiceTest {
 
     @Autowired
-    private Cache cache;
+    private GerenciadorCache cache;
 
     @Autowired
     private UrlRepository repository;

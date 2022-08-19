@@ -1,6 +1,6 @@
 package dev.bstk.okkurlcurtospring.okkurlspring.infra.cache;
 
-public interface Cache {
+public interface GerenciadorCache {
 
     Object get(final Object chave);
 

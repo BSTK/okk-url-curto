@@ -6,7 +6,7 @@ import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
 @Component
-public class CacheLocal implements Cache {
+public class CacheLocal implements GerenciadorCache {
 
     private static final Map<String, Object> CACHE_LOCAL = new ConcurrentHashMap<>();
 

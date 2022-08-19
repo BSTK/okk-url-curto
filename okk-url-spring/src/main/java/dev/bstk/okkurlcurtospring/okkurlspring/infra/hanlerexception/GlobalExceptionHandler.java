@@ -1,9 +1,10 @@
-package dev.bstk.okkurlcurtospring.okkurlspring.domain.hanlerexception;
+package dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception;
 
-import dev.bstk.okkurlcurtospring.okkurlspring.domain.hanlerexception.exception.EncodeBase62Exception;
-import dev.bstk.okkurlcurtospring.okkurlspring.domain.hanlerexception.exception.EncodeQrCodeException;
-import dev.bstk.okkurlcurtospring.okkurlspring.domain.hanlerexception.exception.UrlTokenException;
-import dev.bstk.okkurlcurtospring.okkurlspring.domain.hanlerexception.response.ErroResponse;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.exception.CacheException;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.exception.EncodeBase62Exception;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.exception.EncodeQrCodeException;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.exception.UrlTokenException;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.response.ErroResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,7 +18,7 @@ import java.util.Map;
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    @ExceptionHandler({ EncodeBase62Exception.class, EncodeQrCodeException.class})
+    @ExceptionHandler({ EncodeBase62Exception.class, EncodeQrCodeException.class, CacheException.class })
     public ResponseEntity<Map<Object, Object>> exceptionEncode(final Exception exception) {
         return execute(exception);
     }

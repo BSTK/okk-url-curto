@@ -1,6 +1,6 @@
 package dev.bstk.okkurlcurtospring.okkurlspring.domain.encoder;
 
-import dev.bstk.okkurlcurtospring.okkurlspring.domain.hanlerexception.exception.EncodeBase62Exception;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.exception.EncodeBase62Exception;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
