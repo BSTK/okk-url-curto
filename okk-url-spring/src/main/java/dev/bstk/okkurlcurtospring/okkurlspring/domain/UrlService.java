@@ -4,6 +4,7 @@ import dev.bstk.okkurlcurtospring.okkurlspring.api.request.UrlRequest;
 import dev.bstk.okkurlcurtospring.okkurlspring.domain.data.Url;
 import dev.bstk.okkurlcurtospring.okkurlspring.domain.data.UrlRepository;
 import dev.bstk.okkurlcurtospring.okkurlspring.domain.encoder.Encoder;
+import dev.bstk.okkurlcurtospring.okkurlspring.domain.hanlerexception.exception.UrlTokenException;
 import dev.bstk.okkurlcurtospring.okkurlspring.infra.cache.Cache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -59,10 +60,15 @@ public class UrlService {
 
     public URI redirecionar(final String urlToken) {
         final var urlCache = (Url) cache.get(urlToken);
-        final var urlRedirecionar = Objects.nonNull(urlCache)
-            ? urlCache.getUrlOriginal()
-            : repository.urlOriginal(urlToken);
+        if (Objects.nonNull(urlCache)) {
+            return URI.create(urlCache.getUrlOriginal());
+        }
 
-        return URI.create(urlRedirecionar);
+        final var urlOriginal = repository.urlOriginal(urlToken);
+        if (urlOriginal.isEmpty()) {
+            throw new UrlTokenException(String.format("Não existe url curta para token: [ %s ]", urlToken));
+        }
+
+        return URI.create(urlOriginal.get());
     }
 }

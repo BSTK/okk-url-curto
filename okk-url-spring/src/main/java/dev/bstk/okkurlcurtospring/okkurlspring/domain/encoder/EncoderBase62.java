@@ -1,5 +1,6 @@
 package dev.bstk.okkurlcurtospring.okkurlspring.domain.encoder;
 
+import dev.bstk.okkurlcurtospring.okkurlspring.domain.hanlerexception.exception.EncodeBase62Exception;
 import org.springframework.stereotype.Component;
 
 import java.util.Objects;
@@ -13,7 +14,7 @@ public class EncoderBase62 implements Encoder<Long> {
     @Override
     public String encode(final Long valor) {
         if (Objects.isNull(valor)) {
-            throw new IllegalArgumentException("Id inválido!");
+            throw new EncodeBase62Exception("Id inválido!");
         }
 
         final var builder = new StringBuilder(0);
