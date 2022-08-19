@@ -1,10 +1,7 @@
 package dev.bstk.okkurlcurtospring.okkurlspring.infra.cache;
 
 import dev.bstk.okkurlcurtospring.okkurlspring.api.request.UrlRequest;
-import org.junit.jupiter.api.AfterEach;
-import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 
 class CacheLocalTest {
 
@@ -16,6 +13,7 @@ class CacheLocalTest {
     }
 
     @Test
+    @DisplayName("Deve retonar um objeto do cache dado uma chave valida")
     void deveRetonarUmObjetoDoCacheDadoUmaChaveValida() {
         final var request = new UrlRequest();
         request.setUrl("https://mock.com/asL");
@@ -29,6 +27,7 @@ class CacheLocalTest {
     }
 
     @Test
+    @DisplayName("Deve retonar um null do cache dado uma chave inválida")
     void deveRetonarUmNullDoCacheDadoUmaChaveInvalida() {
         final var request = new UrlRequest();
         request.setUrl("https://mock.com/asL");
@@ -40,6 +39,7 @@ class CacheLocalTest {
     }
 
     @Test
+    @DisplayName("Deve remover todos os objetos do cache")
     void deveRemoverTodosDadosNoCache() {
         final var request = new UrlRequest();
         request.setUrl("https://mock.com/asL");
