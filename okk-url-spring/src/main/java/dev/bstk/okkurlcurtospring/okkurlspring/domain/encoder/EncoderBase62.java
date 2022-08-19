@@ -2,6 +2,8 @@ package dev.bstk.okkurlcurtospring.okkurlspring.domain.encoder;
 
 import org.springframework.stereotype.Component;
 
+import java.util.Objects;
+
 @Component("EncoderBase62")
 public class EncoderBase62 implements Encoder {
 
@@ -10,6 +12,10 @@ public class EncoderBase62 implements Encoder {
 
     @Override
     public String encode(final Object valor) {
+        if (Objects.isNull(valor)) {
+            throw new IllegalArgumentException("Id inválido!");
+        }
+
         final var builder = new StringBuilder(0);
         long id = Long.parseLong(String.valueOf(valor));
 
