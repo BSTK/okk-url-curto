@@ -11,12 +11,12 @@ public class CacheLocal implements Cache {
     private static final Map<String, Object> CACHE_LOCAL = new ConcurrentHashMap<>();
 
     @Override
-    public Object get(final Object chave) {
+    public Object get(Object chave) {
         return CACHE_LOCAL.getOrDefault(String.valueOf(chave), null);
     }
 
     @Override
-    public void put(final Object chave, final Object valor) {
+    public void put(Object chave, Object valor) {
         CACHE_LOCAL.put(String.valueOf(chave), valor);
     }
 
