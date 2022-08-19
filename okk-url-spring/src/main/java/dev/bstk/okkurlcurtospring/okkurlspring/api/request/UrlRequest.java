@@ -8,6 +8,7 @@ import org.hibernate.validator.constraints.URL;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.Objects;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -20,4 +21,9 @@ public class UrlRequest implements Serializable {
     @JsonProperty("url")
     @Size(min = TAMANHO_MINIMO_DE_CARACTERES)
     private String url;
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(url);
+    }
 }

@@ -17,23 +17,30 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class UrlService {
 
+    private static final String STRING_FORMAT_URL = "%s/%s";
+
     @Value("${okk-url-path}")
     private String okkUrl;
 
     @Qualifier("EncoderBase62")
-    private final Encoder base62;
+    private final Encoder<Long> base62;
 
     @Qualifier("EncoderQrCode")
-    private final Encoder urlQrCode;
+    private final Encoder<String> urlQrCode;
 
     private final Cache cache;
     private final UrlRepository repository;
 
 
     public Url encurtar(final UrlRequest request) {
+        final var urlCache = (Url) cache.get(request.hashCode());
+        if (Objects.nonNull(urlCache)) {
+            return urlCache;
+        }
+
         final var urlSalva = repository.save(new Url());
         final var urlToken = base62.encode(urlSalva.getId());
-        final var urlEncurtada = String.format("%s/%s", okkUrl, urlToken);
+        final var urlEncurtada = String.format(STRING_FORMAT_URL, okkUrl, urlToken);
         final var urlEncurtadaQRCode = urlQrCode.encode(urlEncurtada);
 
         urlSalva.setToken(urlToken);
@@ -42,16 +49,17 @@ public class UrlService {
         urlSalva.setUrlEncurtadaQRCode(urlEncurtadaQRCode);
 
         cache.put(urlToken, urlSalva);
+        cache.put(request.hashCode(), urlSalva);
 
         return urlSalva;
     }
 
     public URI redirecionar(final String urlToken) {
         final var urlCache = (Url) cache.get(urlToken);
-        final var urlEncurtada = Objects.nonNull(urlCache)
+        final var urlRedirecionar = Objects.nonNull(urlCache)
             ? urlCache.getUrlOriginal()
             : repository.urlOriginal(urlToken);
 
-        return URI.create(urlEncurtada);
+        return URI.create(urlRedirecionar);
     }
 }

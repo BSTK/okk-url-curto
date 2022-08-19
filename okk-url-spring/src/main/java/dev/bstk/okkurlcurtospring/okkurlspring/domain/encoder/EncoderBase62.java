@@ -5,13 +5,13 @@ import org.springframework.stereotype.Component;
 import java.util.Objects;
 
 @Component("EncoderBase62")
-public class EncoderBase62 implements Encoder {
+public class EncoderBase62 implements Encoder<Long> {
 
     private static final int BASE = 62;
     private static final String CARACTERES = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz";
 
     @Override
-    public String encode(final Object valor) {
+    public String encode(final Long valor) {
         if (Objects.isNull(valor)) {
             throw new IllegalArgumentException("Id inválido!");
         }

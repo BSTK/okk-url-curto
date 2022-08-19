@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.Base64;
 
 @Component("EncoderQrCode")
-public class EncoderQrCode implements Encoder {
+public class EncoderQrCode implements Encoder<String> {
 
     private static final String FORMATO_IMAGEM = "PNG";
     private static final String IMAGE_PNG_BASE64 = "data:image/png;base64,%s";
@@ -30,7 +30,7 @@ public class EncoderQrCode implements Encoder {
     private int altura;
 
     @Override
-    public String encode(final Object url) {
+    public String encode(final String url) {
         try {
             final var bitMatrix = QR_CODE_WRITER.encode(String.valueOf(url), BarcodeFormat.QR_CODE, largura, altura);
 

@@ -1,6 +1,6 @@
 package dev.bstk.okkurlcurtospring.okkurlspring.domain.encoder;
 
-public interface Encoder {
+public interface Encoder<T> {
 
-    String encode(final Object number);
+    String encode(final T number);
 }
