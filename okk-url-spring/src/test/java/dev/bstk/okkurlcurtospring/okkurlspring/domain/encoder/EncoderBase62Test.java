@@ -2,6 +2,7 @@ package dev.bstk.okkurlcurtospring.okkurlspring.domain.encoder;
 
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 class EncoderBase62Test {
@@ -14,6 +15,7 @@ class EncoderBase62Test {
     }
 
     @Test
+    @DisplayName("Deve encodar um id varias vezes da mesma forma")
     void deveEncodarUmIdVariasVezesDaMesmaForma() {
         final var encodeA = encoder.encode(1L);
         final var encodeB = encoder.encode(1L);
@@ -34,7 +36,8 @@ class EncoderBase62Test {
     }
 
     @Test
-    void deveEncodarUmIdDiferenteDeoutroId() {
+    @DisplayName("Deve encodar um id diferente de outro id")
+    void deveEncodarUmIdDiferenteDeOutroId() {
         final var encodeA = encoder.encode(1L);
         final var encodeB = encoder.encode(1829L);
 
@@ -46,6 +49,7 @@ class EncoderBase62Test {
     }
 
     @Test
+    @DisplayName("Deve encodar um id zero")
     void deveEncodarUmIdZero() {
         final var encode = encoder.encode(0L);
 
@@ -54,6 +58,7 @@ class EncoderBase62Test {
     }
 
     @Test
+    @DisplayName("Deve lancar excecao ao tentar encodar um id nulo")
     void deveLancarExcecaoAoTentarEncodarUmIdNulo() {
         final var exception = Assertions
             .assertThrowsExactly(
