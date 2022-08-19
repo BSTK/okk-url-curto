@@ -1,6 +1,7 @@
 package dev.bstk.okkurlcurtospring.okkurlspring.domain.encoder;
 
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -37,6 +38,7 @@ class EncoderQrCodeTest {
 
 
     @Test
+    @DisplayName("Deve retornar um QRCode imagem base 64")
     void deveRetornarUmQRCodeImagemBase64() {
         final var encode = urlQrCode.encode("https://mock.com.br");
 
@@ -46,6 +48,7 @@ class EncoderQrCodeTest {
     }
 
     @Test
+    @DisplayName("Deve retornar um QRCode imagem com aas medidas de altura e largura de acordo com as properties")
     void deveRetonarUmQrCodeImagemComAsMedidadeDeAlturaElarguraDeAcordoComAsProperties() throws IOException {
         final var encode = urlQrCode.encode("https://mock.com.br");
         final var encodeRemovidoPrefixoBase64= encode.split(",")[1];
