@@ -9,11 +9,14 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
+import org.springframework.validation.annotation.Validated;
 
+import javax.validation.Valid;
 import java.net.URI;
 import java.util.Objects;
 
 @Service
+@Validated
 @RequiredArgsConstructor
 public class UrlService {
 
@@ -32,7 +35,7 @@ public class UrlService {
     private final UrlRepository repository;
 
 
-    public Url encurtar(final UrlRequest request) {
+    public Url encurtar(@Valid final UrlRequest request) {
         final var urlCache = (Url) cache.get(request.hashCode());
         if (Objects.nonNull(urlCache)) {
             return urlCache;

@@ -23,6 +23,14 @@ public class UrlRequest implements Serializable {
     private String url;
 
     @Override
+    public boolean equals(Object o) {
+        if (this == o) { return true; }
+        if (o == null || getClass() != o.getClass()) { return false; }
+        UrlRequest request = (UrlRequest) o;
+        return Objects.equals(url, request.url);
+    }
+
+    @Override
     public int hashCode() {
         return Objects.hash(url);
     }
