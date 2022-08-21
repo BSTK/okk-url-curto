@@ -1,5 +1,6 @@
 package dev.bstk.okkurlcurtospring.okkurlspring.domain.encoder;
 
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.exception.EncodeBase62Exception;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
@@ -7,7 +8,7 @@ import org.junit.jupiter.api.Test;
 
 class EncoderBase62Test {
 
-    private Encoder encoder;
+    private Encoder<Long> encoder;
 
     @BeforeEach
     void setUp() {
@@ -62,7 +63,7 @@ class EncoderBase62Test {
     void deveLancarExcecaoAoTentarEncodarUmIdNulo() {
         final var exception = Assertions
             .assertThrowsExactly(
-                IllegalArgumentException.class,
+                EncodeBase62Exception.class,
                 () -> encoder.encode(null)
             );
 

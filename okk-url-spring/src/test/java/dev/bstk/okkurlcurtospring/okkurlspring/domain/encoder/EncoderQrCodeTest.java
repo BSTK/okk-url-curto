@@ -28,7 +28,7 @@ class EncoderQrCodeTest {
 
     @Autowired
     @Qualifier("EncoderQrCode")
-    private Encoder urlQrCode;
+    private Encoder<String> urlQrCode;
 
     @Value("${okk-qrcode-largura}")
     private int largura;
