@@ -32,7 +32,7 @@ public class UrlResource {
     }
 
     @GetMapping("/{url_token}")
-    public ResponseEntity<Void> redirecionar(@PathVariable("url_url_token") final String urlToken) {
+    public ResponseEntity<Void> redirecionar(@PathVariable("url_token") final String urlToken) {
         final var urlRedirecionar = urlService.redirecionar(urlToken);
         return ResponseEntity
             .status(HttpStatus.MOVED_PERMANENTLY)
