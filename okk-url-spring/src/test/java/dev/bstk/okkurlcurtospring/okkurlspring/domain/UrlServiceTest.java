@@ -13,6 +13,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
+import java.net.URI;
+import java.util.Optional;
+
 import static org.mockito.ArgumentMatchers.*;
 import static org.mockito.Mockito.*;
 
@@ -68,6 +71,17 @@ class UrlServiceTest {
         verify(cache, times(0)).put(anyInt(), any(Url.class));
 
         executeAssert(urlEncurtada);
+    }
+
+    @Test
+    @DisplayName("Deve retornar url original dado um token valido")
+    void deveRetornarUrlOriginalDadoUmTokenValido() {
+        when(cache.get(anyString())).thenReturn(null);
+        when(repository.urlOriginal(anyString())).thenReturn(Optional.of("https://mock-url/aaa-aaaaaaa-aaa"));
+
+        URI urlOriginal = urlService.redirecionar("token");
+
+        Assertions.assertNotNull(urlOriginal);
     }
 
     private void executeAssert(final Url urlEncurtada) {
