@@ -1,6 +1,6 @@
 package dev.bstk.okkurlcurtospring.okkurlspring.domain.encoder;
 
-import dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.exception.EncodeBase62Exception;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.handlerexception.exception.EncodeBase62Exception;
 
 import java.util.Objects;
 

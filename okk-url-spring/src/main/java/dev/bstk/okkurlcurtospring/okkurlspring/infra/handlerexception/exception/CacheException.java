@@ -1,4 +1,4 @@
-package dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.exception;
+package dev.bstk.okkurlcurtospring.okkurlspring.infra.handlerexception.exception;
 
 public class CacheException extends RuntimeException {
 

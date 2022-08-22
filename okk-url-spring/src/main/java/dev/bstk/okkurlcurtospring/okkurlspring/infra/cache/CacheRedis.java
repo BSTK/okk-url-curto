@@ -1,6 +1,6 @@
 package dev.bstk.okkurlcurtospring.okkurlspring.infra.cache;
 
-import dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.exception.CacheException;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.handlerexception.exception.CacheException;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.Cache;

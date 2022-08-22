@@ -5,7 +5,7 @@ import com.google.zxing.WriterException;
 import com.google.zxing.client.j2se.MatrixToImageConfig;
 import com.google.zxing.client.j2se.MatrixToImageWriter;
 import com.google.zxing.qrcode.QRCodeWriter;
-import dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.exception.EncodeQrCodeException;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.handlerexception.exception.EncodeQrCodeException;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 

@@ -1,4 +1,4 @@
-package dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.response;
+package dev.bstk.okkurlcurtospring.okkurlspring.infra.handlerexception.response;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;

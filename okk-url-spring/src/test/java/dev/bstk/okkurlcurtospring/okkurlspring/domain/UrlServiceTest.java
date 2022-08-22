@@ -5,7 +5,7 @@ import dev.bstk.okkurlcurtospring.okkurlspring.domain.data.Url;
 import dev.bstk.okkurlcurtospring.okkurlspring.domain.data.UrlRepository;
 import dev.bstk.okkurlcurtospring.okkurlspring.domain.encoder.QrCode;
 import dev.bstk.okkurlcurtospring.okkurlspring.infra.cache.GerenciadorCache;
-import dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.exception.UrlTokenException;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.handlerexception.exception.UrlTokenException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;

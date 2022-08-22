@@ -1,10 +1,10 @@
-package dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception;
+package dev.bstk.okkurlcurtospring.okkurlspring.infra.handlerexception;
 
-import dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.exception.CacheException;
-import dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.exception.EncodeBase62Exception;
-import dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.exception.EncodeQrCodeException;
-import dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.exception.UrlTokenException;
-import dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.response.ErroResponse;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.handlerexception.exception.CacheException;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.handlerexception.exception.EncodeBase62Exception;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.handlerexception.exception.EncodeQrCodeException;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.handlerexception.exception.UrlTokenException;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.handlerexception.response.ErroResponse;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
