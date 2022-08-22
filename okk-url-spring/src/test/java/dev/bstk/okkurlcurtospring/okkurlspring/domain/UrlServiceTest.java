@@ -45,10 +45,7 @@ class UrlServiceTest {
         doNothing().when(cache).put(anyString(), any(Url.class));
         doNothing().when(cache).put(anyInt(), any(Url.class));
 
-        final var request = new UrlRequest();
-        request.setUrl("https://mock-url/ks");
-
-        final var urlEncurtada = urlService.encurtar(request);
+        final var urlEncurtada = urlService.encurtar(mockRequest());
 
         Assertions.assertNotNull(urlEncurtada);
         Assertions.assertNotNull(urlEncurtada.getId());
@@ -69,10 +66,7 @@ class UrlServiceTest {
         urlCache.setUrlOriginal("https://mock-url/aaa-aaaaaaa-aaa");
         when(cache.get(anyInt())).thenReturn(urlCache);
 
-        final var request = new UrlRequest();
-        request.setUrl("https://mock-url/ks");
-
-        final var urlEncurtada = urlService.encurtar(request);
+        final var urlEncurtada = urlService.encurtar(mockRequest());
 
         verifyNoInteractions(repository, qrCode);
         verify(cache, times(0)).put(anyString(), any(Url.class));
@@ -84,5 +78,12 @@ class UrlServiceTest {
         Assertions.assertNotNull(urlEncurtada.getUrlOriginal());
         Assertions.assertNotNull(urlEncurtada.getUrlEncurtada());
         Assertions.assertNotNull(urlEncurtada.getUrlEncurtadaQRCode());
+    }
+
+    private UrlRequest mockRequest() {
+        final var request = new UrlRequest();
+        request.setUrl("https://mock-url/ks");
+
+        return request;
     }
 }
