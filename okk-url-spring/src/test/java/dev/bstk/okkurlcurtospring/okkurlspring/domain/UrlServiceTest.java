@@ -5,6 +5,7 @@ import dev.bstk.okkurlcurtospring.okkurlspring.domain.data.Url;
 import dev.bstk.okkurlcurtospring.okkurlspring.domain.data.UrlRepository;
 import dev.bstk.okkurlcurtospring.okkurlspring.domain.encoder.QrCode;
 import dev.bstk.okkurlcurtospring.okkurlspring.infra.cache.GerenciadorCache;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.hanlerexception.exception.UrlTokenException;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
@@ -50,19 +51,13 @@ class UrlServiceTest {
 
         final var urlEncurtada = urlService.encurtar(mockRequest());
 
-        executeAssert(urlEncurtada);
+        assertions(urlEncurtada);
     }
 
     @Test
     @DisplayName("Deve retornar uma url com dados convertidos obtidos do cache")
     void deveRetonarUmaUrlComDadosConvertidosObtidosDoCache() {
-        final var urlCache = new Url();
-        urlCache.setId(1L);
-        urlCache.setToken("token");
-        urlCache.setUrlEncurtadaQRCode("QR_CODE");
-        urlCache.setUrlEncurtada("https://mock-url/token");
-        urlCache.setUrlOriginal("https://mock-url/aaa-aaaaaaa-aaa");
-        when(cache.get(anyInt())).thenReturn(urlCache);
+        when(cache.get(anyInt())).thenReturn(mockUrlCache());
 
         final var urlEncurtada = urlService.encurtar(mockRequest());
 
@@ -70,7 +65,7 @@ class UrlServiceTest {
         verify(cache, times(0)).put(anyString(), any(Url.class));
         verify(cache, times(0)).put(anyInt(), any(Url.class));
 
-        executeAssert(urlEncurtada);
+        assertions(urlEncurtada);
     }
 
     @Test
@@ -84,13 +79,49 @@ class UrlServiceTest {
         Assertions.assertNotNull(urlOriginal);
     }
 
-    private void executeAssert(final Url urlEncurtada) {
+    @Test
+    @DisplayName("Deve retornar url original dado um token valido obtidos do cache")
+    void deveRetornarUrlOriginalDadoUmTokenValidoObtidosDoCache() {
+        when(cache.get(anyString())).thenReturn(mockUrlCache());
+
+        URI urlOriginal = urlService.redirecionar("token");
+
+        verify(repository, times(0)).urlOriginal(anyString());
+
+        Assertions.assertNotNull(urlOriginal);
+    }
+
+    @Test
+    @DisplayName("Deve lancar excecao ao tentar redirecionar para uma Url na qual não existe token vinculado")
+    void deveLancarExcecaoAoTentarRedirecionarParaUmaUrlNaQualExisteTokenVinculado() {
+        final var exception = Assertions
+            .assertThrowsExactly(
+                UrlTokenException.class,
+                () -> urlService.redirecionar("token")
+            );
+
+        Assertions.assertNotNull(exception);
+        Assertions.assertEquals("Não existe url curta para token: [ token ]", exception.getMessage());
+    }
+
+    private void assertions(final Url urlEncurtada) {
         Assertions.assertNotNull(urlEncurtada);
         Assertions.assertNotNull(urlEncurtada.getId());
         Assertions.assertNotNull(urlEncurtada.getToken());
         Assertions.assertNotNull(urlEncurtada.getUrlOriginal());
         Assertions.assertNotNull(urlEncurtada.getUrlEncurtada());
         Assertions.assertNotNull(urlEncurtada.getUrlEncurtadaQRCode());
+    }
+
+    private Url mockUrlCache() {
+        final var url = new Url();
+        url.setId(1L);
+        url.setToken("token");
+        url.setUrlEncurtadaQRCode("QR_CODE");
+        url.setUrlEncurtada("https://mock-url/token");
+        url.setUrlOriginal("https://mock-url.com/aaa-aaaaaaa-aaa");
+
+        return url;
     }
 
     private UrlRequest mockRequest() {

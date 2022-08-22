@@ -23,7 +23,7 @@ class CacheLocalTest {
 
         Assertions.assertNotNull(requestCache);
         Assertions.assertInstanceOf(UrlRequest.class, requestCache);
-        Assertions.assertEquals("https://mock.com/asLY", requestCache.getUrl());
+        Assertions.assertEquals("https://mock.com/asL", requestCache.getUrl());
     }
 
     @Test
