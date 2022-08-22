@@ -25,10 +25,10 @@ public class Url implements Serializable {
     @Column(name = "URL_ORIGINAL")
     private String urlOriginal;
 
+    @Column(name = "URL_ORIGINAL_QR_CODE")
+    private String urlOriginalQRCode;
+
     @URL
     @Column(name = "URL_ENCURTADA")
     private String urlEncurtada;
-
-    @Column(name = "URL_ENCURTADA_QR_CODE")
-    private String urlEncurtadaQRCode;
 }

@@ -25,15 +25,15 @@ public class UrlResource {
         final UrlResponse urlResponse = new UrlResponse(
             urlEncurtadada.getUrlOriginal(),
             urlEncurtadada.getUrlEncurtada(),
-            urlEncurtadada.getUrlEncurtadaQRCode()
+            urlEncurtadada.getUrlOriginalQRCode()
         );
 
         return ResponseEntity.ok(urlResponse);
     }
 
-    @GetMapping("/{url_id}")
-    public ResponseEntity<Void> redirecionar(@PathVariable("url_id") final String urlId) {
-        final var urlRedirecionar = urlService.redirecionar(urlId);
+    @GetMapping("/{url_token}")
+    public ResponseEntity<Void> redirecionar(@PathVariable("url_url_token") final String urlToken) {
+        final var urlRedirecionar = urlService.redirecionar(urlToken);
         return ResponseEntity
             .status(HttpStatus.MOVED_PERMANENTLY)
             .location(urlRedirecionar)

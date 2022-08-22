@@ -40,12 +40,12 @@ public class UrlService {
         final var urlSalva = repository.save(new Url());
         final var urlToken = Base62.encode(urlSalva.getId());
         final var urlEncurtada = String.format(STRING_FORMAT_URL, okkUrl, urlToken);
-        final var urlEncurtadaQRCode = qrCode.criarQrCode(urlEncurtada);
+        final var urlOriginalQRCode = qrCode.criarQrCode(request.getUrl());
 
         urlSalva.setToken(urlToken);
         urlSalva.setUrlOriginal(request.getUrl());
         urlSalva.setUrlEncurtada(urlEncurtada);
-        urlSalva.setUrlEncurtadaQRCode(urlEncurtadaQRCode);
+        urlSalva.setUrlOriginalQRCode(urlOriginalQRCode);
 
         cache.put(urlToken, urlSalva);
         cache.put(request.hashCode(), urlSalva);

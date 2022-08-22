@@ -113,7 +113,7 @@ class UrlResourceTest {
         final var url = new Url();
         url.setToken("okL");
         url.setUrlOriginal(urlOriginal);
-        url.setUrlEncurtadaQRCode("QR_CODE");
+        url.setUrlOriginalQRCode("QR_CODE");
         url.setUrlEncurtada("https://www.mock-url/okL");
 
         final var request = mockRequest(urlOriginal);

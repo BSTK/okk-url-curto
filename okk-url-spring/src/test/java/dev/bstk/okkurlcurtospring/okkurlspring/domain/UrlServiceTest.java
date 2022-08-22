@@ -110,14 +110,14 @@ class UrlServiceTest {
         Assertions.assertNotNull(urlEncurtada.getToken());
         Assertions.assertNotNull(urlEncurtada.getUrlOriginal());
         Assertions.assertNotNull(urlEncurtada.getUrlEncurtada());
-        Assertions.assertNotNull(urlEncurtada.getUrlEncurtadaQRCode());
+        Assertions.assertNotNull(urlEncurtada.getUrlOriginalQRCode());
     }
 
     private Url mockUrlCache() {
         final var url = new Url();
         url.setId(1L);
         url.setToken("token");
-        url.setUrlEncurtadaQRCode("QR_CODE");
+        url.setUrlOriginalQRCode("QR_CODE");
         url.setUrlEncurtada("https://mock-url/token");
         url.setUrlOriginal("https://mock-url.com/aaa-aaaaaaa-aaa");
 
