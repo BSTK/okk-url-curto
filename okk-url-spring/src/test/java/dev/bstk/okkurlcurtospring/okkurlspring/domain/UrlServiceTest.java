@@ -47,12 +47,7 @@ class UrlServiceTest {
 
         final var urlEncurtada = urlService.encurtar(mockRequest());
 
-        Assertions.assertNotNull(urlEncurtada);
-        Assertions.assertNotNull(urlEncurtada.getId());
-        Assertions.assertNotNull(urlEncurtada.getToken());
-        Assertions.assertNotNull(urlEncurtada.getUrlOriginal());
-        Assertions.assertNotNull(urlEncurtada.getUrlEncurtada());
-        Assertions.assertNotNull(urlEncurtada.getUrlEncurtadaQRCode());
+        executeAssert(urlEncurtada);
     }
 
     @Test
@@ -72,6 +67,10 @@ class UrlServiceTest {
         verify(cache, times(0)).put(anyString(), any(Url.class));
         verify(cache, times(0)).put(anyInt(), any(Url.class));
 
+        executeAssert(urlEncurtada);
+    }
+
+    private void executeAssert(final Url urlEncurtada) {
         Assertions.assertNotNull(urlEncurtada);
         Assertions.assertNotNull(urlEncurtada.getId());
         Assertions.assertNotNull(urlEncurtada.getToken());
