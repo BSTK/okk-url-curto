@@ -14,23 +14,16 @@ import org.springframework.core.env.Environment;
 @RequiredArgsConstructor
 public class ConfiguracaoCache {
 
-    private static final String AMBIENTE_EM_EXECUCAO_DEV = "dev";
-
     private final Environment ambiente;
     private final ApplicationContext context;
 
     @Bean
     public GerenciadorCache cache() {
-        final var profilesAtivo = ambiente.getActiveProfiles();
-
-        if (profilesAtivo.length > 0) {
-            final var profileAtivo = profilesAtivo[0];
-            if (!AMBIENTE_EM_EXECUCAO_DEV.equalsIgnoreCase(profileAtivo)) {
-                final var cacheManager = context.getBean(CacheManager.class);
-                return new CacheRedis(cacheManager);
-            }
+        if (ambiente.getActiveProfiles().length == 0) {
+            return new CacheLocal();
         }
 
-        return new CacheLocal();
+        final var cacheManager = context.getBean(CacheManager.class);
+        return new CacheRedis(cacheManager);
     }
 }
