@@ -13,8 +13,8 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Base64;
 
-@Component("EncoderQrCode")
-public class EncoderQrCode implements Encoder<String> {
+@Component
+public class QrCode {
 
     private static final String FORMATO_IMAGEM = "PNG";
     private static final String IMAGE_PNG_BASE64 = "data:image/png;base64,%s";
@@ -30,15 +30,14 @@ public class EncoderQrCode implements Encoder<String> {
     @Value("${okk-qrcode-altura}")
     private int altura;
 
-    @Override
-    public String encode(final String url) {
+    public String criarQrCode(final String url) {
         try {
             final var bitMatrix = QR_CODE_WRITER.encode(String.valueOf(url), BarcodeFormat.QR_CODE, largura, altura);
 
             final var byteArrayOutputStream = new ByteArrayOutputStream();
-            final var matrixToImageConfig = new MatrixToImageConfig(QR_CODE_IMAGE_CONFIG_ON_COLOR, QR_CODE_IMAGE_CONFIG_OFF_COLOR) ;
+            final var matrixToImageConfig = new MatrixToImageConfig(QR_CODE_IMAGE_CONFIG_ON_COLOR, QR_CODE_IMAGE_CONFIG_OFF_COLOR);
 
-            MatrixToImageWriter.writeToStream(bitMatrix, FORMATO_IMAGEM, byteArrayOutputStream,matrixToImageConfig);
+            MatrixToImageWriter.writeToStream(bitMatrix, FORMATO_IMAGEM, byteArrayOutputStream, matrixToImageConfig);
             final var qrCodeBytes = byteArrayOutputStream.toByteArray();
             final var imagemBase64 = Base64.getEncoder().encodeToString(qrCodeBytes);
 

@@ -4,7 +4,6 @@ import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.TestPropertySource;
@@ -27,8 +26,7 @@ class EncoderQrCodeTest {
     private static final String IMAGE_PNG_BASE64 = "data:image/png;base64,";
 
     @Autowired
-    @Qualifier("EncoderQrCode")
-    private Encoder<String> urlQrCode;
+    private QrCode qrCode;
 
     @Value("${okk-qrcode-largura}")
     private int largura;
@@ -40,7 +38,7 @@ class EncoderQrCodeTest {
     @Test
     @DisplayName("Deve retornar um QRCode imagem base 64")
     void deveRetornarUmQRCodeImagemBase64() {
-        final var encode = urlQrCode.encode("https://mock.com.br");
+        final var encode = qrCode.criarQrCode("https://mock.com.br");
 
         Assertions.assertNotNull(encode);
         Assertions.assertTrue(encode.startsWith(IMAGE_PNG_BASE64));
@@ -50,7 +48,7 @@ class EncoderQrCodeTest {
     @Test
     @DisplayName("Deve retornar um QRCode imagem com aas medidas de altura e largura de acordo com as properties")
     void deveRetonarUmQrCodeImagemComAsMedidadeDeAlturaElarguraDeAcordoComAsProperties() throws IOException {
-        final var encode = urlQrCode.encode("https://mock.com.br");
+        final var encode = qrCode.criarQrCode("https://mock.com.br");
         final var encodeRemovidoPrefixoBase64= encode.split(",")[1];
         final var imagemBase64Decodificada = Base64.getDecoder().decode(encodeRemovidoPrefixoBase64);
 
