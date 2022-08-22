@@ -2,8 +2,8 @@ package dev.bstk.okkurlcurtospring.okkurlspring.infra.cache.configuracao;
 
 import dev.bstk.okkurlcurtospring.okkurlspring.infra.cache.CacheLocal;
 import dev.bstk.okkurlcurtospring.okkurlspring.infra.cache.CacheRedis;
-import dev.bstk.okkurlcurtospring.okkurlspring.infra.cache.GerenciadorCache;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -28,6 +28,7 @@ class ConfiguracaoCacheTest {
     private ApplicationContext context;
 
     @Test
+    @DisplayName("Deve retornar uma instancia de cache local")
     void deveRetonarUmaInstanciaaDeCacheLocal() {
         when(ambiente.getActiveProfiles()).thenReturn(new String[] {});
 
@@ -40,6 +41,7 @@ class ConfiguracaoCacheTest {
     }
 
     @Test
+    @DisplayName("Deve retornar uma instancia de cache redis")
     void deveRetonarUmaInstanciaaDeCacheRedis() {
         when(ambiente.getActiveProfiles()).thenReturn(new String[] {"dev"});
 
