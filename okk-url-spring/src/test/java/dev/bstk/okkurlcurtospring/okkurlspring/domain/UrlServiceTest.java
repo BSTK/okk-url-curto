@@ -3,13 +3,13 @@ package dev.bstk.okkurlcurtospring.okkurlspring.domain;
 import dev.bstk.okkurlcurtospring.okkurlspring.api.request.UrlRequest;
 import dev.bstk.okkurlcurtospring.okkurlspring.domain.data.Url;
 import dev.bstk.okkurlcurtospring.okkurlspring.domain.data.UrlRepository;
+import dev.bstk.okkurlcurtospring.okkurlspring.domain.encoder.QrCode;
 import dev.bstk.okkurlcurtospring.okkurlspring.infra.cache.GerenciadorCache;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
-import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import static org.mockito.ArgumentMatchers.*;
@@ -19,17 +19,14 @@ import static org.mockito.Mockito.when;
 @ExtendWith(MockitoExtension.class)
 class UrlServiceTest {
 
-    /*@InjectMocks
+    @InjectMocks
     private UrlService urlService;
 
     @Mock
+    private QrCode qrCode;
+
+    @Mock
     private GerenciadorCache cache;
-
-    // @Mock(name = "base62")
-    private Encoder<Long> base62 = (Encoder<Long>) Mockito.mock(Encoder.class);
-
-    // @Mock(name = "urlQrCode")
-    private Encoder<String> urlQrCode = (Encoder<String>) Mockito.mock(Encoder.class);
 
     @Mock
     private UrlRepository repository;
@@ -41,8 +38,7 @@ class UrlServiceTest {
         urlMock.setId(1L);
         when(repository.save(any(Url.class))).thenReturn(urlMock);
 
-        when(base62.encode(anyLong())).thenReturn("TOKEN_MOCK");
-        when(urlQrCode.encode(anyString())).thenReturn("QRCODE_MOCK");
+        when(qrCode.criarQrCode(anyString())).thenReturn("QRCODE_MOCK");
 
         when(cache.get(anyInt())).thenReturn(null);
         doNothing().when(cache).put(anyString(), any(Url.class));
@@ -59,5 +55,5 @@ class UrlServiceTest {
         Assertions.assertNotNull(urlEncurtada.getUrlOriginal());
         Assertions.assertNotNull(urlEncurtada.getUrlEncurtada());
         Assertions.assertNotNull(urlEncurtada.getUrlEncurtadaQRCode());
-    }*/
+    }
 }
