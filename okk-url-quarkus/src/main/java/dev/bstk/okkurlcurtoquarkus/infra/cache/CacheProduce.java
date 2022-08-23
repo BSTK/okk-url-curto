@@ -5,7 +5,6 @@ import io.quarkus.runtime.configuration.ProfileManager;
 import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 
-@ApplicationScoped
 public class CacheProduce {
 
     private static final String AMBIENTE_DEV = "dev";
@@ -13,6 +12,7 @@ public class CacheProduce {
     private static final String AMBIENTE_PROD = "prod";
 
     @Produces
+    @ApplicationScoped
     public GerenciadorCache cache() {
         final var ambiente = ProfileManager.getActiveProfile();
         final var ambienteRemoto = isDev(ambiente) || isHom(ambiente) || isProd(ambiente);

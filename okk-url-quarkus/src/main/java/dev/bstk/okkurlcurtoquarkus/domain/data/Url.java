@@ -17,7 +17,7 @@ public class Url implements Serializable {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @NaturalId
+    @NaturalId(mutable = true)
     @Column(name = "TOKEN", unique = true)
     private String token;
 
@@ -25,7 +25,7 @@ public class Url implements Serializable {
     @Column(name = "URL_ORIGINAL")
     private String urlOriginal;
 
-    @Column(name = "URL_ORIGINAL_QR_CODE")
+    @Column(name = "URL_ORIGINAL_QR_CODE", columnDefinition = "TEXT")
     private String urlOriginalQRCode;
 
     @URL

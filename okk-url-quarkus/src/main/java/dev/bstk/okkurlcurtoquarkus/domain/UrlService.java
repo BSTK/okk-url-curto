@@ -12,6 +12,7 @@ import org.eclipse.microprofile.config.inject.ConfigProperty;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
+import javax.transaction.Transactional;
 import javax.validation.Valid;
 import java.net.URI;
 import java.util.Objects;
@@ -34,7 +35,7 @@ public class UrlService {
     @Inject
     protected UrlRepository repository;
 
-
+    @Transactional
     public Url encurtar(@Valid final UrlRequest request) {
         final var urlCache = (Url) cache.get(request.hashCode());
         if (Objects.nonNull(urlCache)) {
@@ -59,6 +60,7 @@ public class UrlService {
         return urlSalva;
     }
 
+    @Transactional(Transactional.TxType.SUPPORTS)
     public URI redirecionar(final String urlToken) {
         final var urlCache = (Url) cache.get(urlToken);
         if (Objects.nonNull(urlCache)) {

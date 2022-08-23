@@ -1,10 +1,8 @@
 package dev.bstk.okkurlcurtoquarkus.infra.cache;
 
-import javax.enterprise.context.ApplicationScoped;
 import java.util.Map;
 import java.util.concurrent.ConcurrentHashMap;
 
-@ApplicationScoped
 public class CacheLocal implements GerenciadorCache {
 
     private static final Map<String, Object> CACHE_LOCAL = new ConcurrentHashMap<>();
