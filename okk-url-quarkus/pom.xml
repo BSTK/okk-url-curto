@@ -81,6 +81,12 @@
             <artifactId>quarkus-hibernate-validator</artifactId>
         </dependency>
 
+        <!-- Redis -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-redis-client</artifactId>
+        </dependency>
+
         <!-- ZXing -->
         <dependency>
             <groupId>com.google.zxing</groupId>
@@ -121,7 +127,6 @@
         <dependency>
             <groupId>io.quarkus</groupId>
             <artifactId>quarkus-jdbc-h2</artifactId>
-            <scope>test</scope>
         </dependency>
     </dependencies>
     <build>
