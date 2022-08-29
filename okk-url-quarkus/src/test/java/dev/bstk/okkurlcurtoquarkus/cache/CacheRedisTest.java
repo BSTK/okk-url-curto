@@ -2,17 +2,31 @@ package dev.bstk.okkurlcurtoquarkus.cache;
 
 import dev.bstk.okkurlcurtoquarkus.api.request.UrlRequest;
 import dev.bstk.okkurlcurtoquarkus.infra.cache.GerenciadorCache;
-import org.junit.jupiter.api.*;
+import io.quarkus.redis.datasource.ReactiveRedisDataSource;
+import io.quarkus.redis.datasource.RedisDataSource;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 @ExtendWith(MockitoExtension.class)
 class CacheRedisTest {
 
+    @Mock
+    private RedisDataSource dataSource;
+
+    @Mock
+    private ReactiveRedisDataSource reactiveDataSource;
+
     private GerenciadorCache cache;
 
     @BeforeEach
-    void setUp() { }
+    void setUp() {
+        // this.cache = new CacheRedis(CacheRedisMock.StringCommands(), reactiveDataSource);
+    }
 
     @Test
     @DisplayName("Deve retonar um objeto do cache dado uma chave valida")
@@ -59,7 +73,7 @@ class CacheRedisTest {
         Assertions.assertNull(requestCache3);
     }
 
-    @AfterEach
+    // @AfterEach
     void tearDown() {
         cache.clear();
     }
