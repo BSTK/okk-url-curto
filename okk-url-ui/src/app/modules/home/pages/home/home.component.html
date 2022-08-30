@@ -16,12 +16,12 @@
 
       <div *ngIf="mostrarUrlEncurtada">
         <div class="form-floating mb-3">
-          <a class="text-start text-primary" href="http://okk-url/token" target="_blank">
-            http://okk-url/token
+          <a class="text-start text-primary" [href]="urlEncurtada" target="_blank">
+            {{ urlEncurtada }}
           </a>
         </div>
         <div class="form-floating mb-3">
-          <img src="https://via.placeholder.com/200x200" class="rounded mx-auto d-block" alt="...">
+          <img [src]="urlQrCode" class="rounded mx-auto d-block" alt="url qr code" width="200" height="200">
         </div>
       </div>
 

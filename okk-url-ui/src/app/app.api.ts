@@ -1,8 +1,9 @@
 export class Api {
 
   static readonly URLS = Object.freeze({
-    plataforma: {
-      jogos: 'http://localhost:8080/game-okk-plataforma/api/v1/jogos'
+    url: {
+      encurtar: 'http://localhost:8080/url',
+      redirecionar: 'http://localhost:8080/{url_token}',
     },
   });
 }

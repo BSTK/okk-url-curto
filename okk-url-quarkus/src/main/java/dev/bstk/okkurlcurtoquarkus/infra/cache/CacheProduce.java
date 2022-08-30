@@ -11,13 +11,11 @@ import javax.enterprise.inject.Produces;
 public class CacheProduce {
 
     private static final String AMBIENTE_DEV = "dev";
-    private static final String AMBIENTE_HOM = "hom";
-    private static final String AMBIENTE_PROD = "prod";
 
     @Produces
     @ApplicationScoped
     public GerenciadorCache cache() {
-        return executandoAmbienteLocal()
+        return executandoAmbienteDevLocal()
             ? new CacheLocal()
             : new CacheRedis(
                 Arc.container().instance(RedisDataSource.class).get(),
@@ -25,12 +23,8 @@ public class CacheProduce {
             );
     }
 
-    private boolean executandoAmbienteLocal() {
+    private boolean executandoAmbienteDevLocal() {
         final var ambiente = ProfileManager.getActiveProfile();
-        final var ambienteRemoto = AMBIENTE_DEV.equalsIgnoreCase(ambiente)
-            || AMBIENTE_HOM.equalsIgnoreCase(ambiente)
-            || AMBIENTE_PROD.equalsIgnoreCase(ambiente);
-
-        return !ambienteRemoto;
+        return AMBIENTE_DEV.equalsIgnoreCase(ambiente);
     }
 }
