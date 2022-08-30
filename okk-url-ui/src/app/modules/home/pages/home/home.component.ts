@@ -18,6 +18,8 @@ export class HomeComponent implements OnInit {
 
   encurtar(): void {
     console.log('Encurtando Url original: ', this.urlOriginal);
+
+    this.urlOriginal = '';
     this.mostrarUrlEncurtada = true;
   }
 

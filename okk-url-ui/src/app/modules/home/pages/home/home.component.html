@@ -2,7 +2,12 @@
   <div class="col-md-10 mx-auto col-lg-5">
     <div class="p-4 p-md-5">
       <div class="form-floating mb-3">
-        <input type="url" class="form-control" id="urlOriginal" placeholder="Url original">
+        <input type="url"
+               class="form-control"
+               id="urlOriginal"
+               name="urlOriginal"
+               [(ngModel)]="urlOriginal"
+               placeholder="Url original">
         <label for="urlOriginal">Url longa</label>
       </div>
       <button class="w-100 btn btn-lg btn-primary" type="button" (click)="encurtar()">Encurtar</button>
