@@ -42,9 +42,7 @@ class UrlResourceTest {
     }
 
     @Test
-    @Disabled(
-         "TODO - Por algum motivo não está chamando a url corretamente, "
-       + "gerando um HttpStatus 404 onde era esperado HttpStatus 301")
+    @Disabled("TODO - Por algum motivo não está chamando a url corretamente, gerando um HttpStatus 404 onde era esperado HttpStatus 301")
     @DisplayName("Deve redirecionar para url original dado um token válido")
     void deveRedirecionarParaUrlOriginaldadoUmTokenValido() {
         final var request = mockRequest();

@@ -12,9 +12,11 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import org.mockito.invocation.InvocationOnMock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import org.mockito.junit.jupiter.MockitoSettings;
 import org.mockito.quality.Strictness;
+import org.mockito.stubbing.Answer;
 
 import java.net.URI;
 import java.util.Optional;
@@ -42,10 +44,7 @@ class UrlServiceTest {
     @Test
     @DisplayName("Deve retornar uma url com dados convertidos")
     void deveRetonarUmaUrlComDadosConvertidos() {
-        final var urlMock = new Url();
-        urlMock.setId(1L);
-
-        doNothing().when(repository).persist(urlMock);
+        doAnswer(new UrlAnswer()).when(repository).persist(any(Url.class));
         when(qrCode.criarQrCode(anyString())).thenReturn("QRCODE_MOCK");
 
         when(cache.get(anyInt())).thenReturn(null);
@@ -132,5 +131,14 @@ class UrlServiceTest {
         request.setUrl("https://mock-url/ks");
 
         return request;
+    }
+
+    private static class UrlAnswer implements Answer<Url> {
+        @Override
+        public Url answer(final InvocationOnMock invocation) throws Throwable {
+            final var url = (Url) invocation.getArguments()[0];
+            url.setId(1L);
+            return url;
+        }
     }
 }
