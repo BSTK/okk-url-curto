@@ -1,25 +1,30 @@
 package dev.bstk.okkurlcurtoquarkus.domain.encoder;
 
+import io.quarkus.test.junit.QuarkusTest;
+import org.eclipse.microprofile.config.inject.ConfigProperty;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 
 import javax.imageio.ImageIO;
+import javax.inject.Inject;
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
 import java.util.Base64;
 
+@QuarkusTest
 class EncoderQrCodeTest {
 
     private static final String IMAGE_PNG_BASE64 = "data:image/png;base64,";
 
-    private QrCode qrCode;
+    @Inject
+    protected QrCode qrCode;
 
-    // @Value("${okk-qrcode-largura}")
-    private int largura;
+    @ConfigProperty(name = "okk-qrcode-largura")
+    protected int largura;
 
-    // @Value("${okk-qrcode-altura}")
-    private int altura;
+    @ConfigProperty(name = "okk-qrcode-altura")
+    protected int altura;
 
 
     @Test
