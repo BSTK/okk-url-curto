@@ -1,16 +1,24 @@
-package dev.bstk.okkurlcurtoquarkus.cache;
+package dev.bstk.okkurlcurtoquarkus.infra.cache;
 
 import dev.bstk.okkurlcurtoquarkus.api.request.UrlRequest;
-import dev.bstk.okkurlcurtoquarkus.infra.cache.GerenciadorCache;
 import io.quarkus.redis.datasource.ReactiveRedisDataSource;
 import io.quarkus.redis.datasource.RedisDataSource;
+import io.quarkus.redis.datasource.keys.ReactiveKeyCommands;
+import io.quarkus.redis.datasource.string.StringCommands;
+import io.smallrye.mutiny.Uni;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.Mock;
+import org.mockito.Mockito;
 import org.mockito.junit.jupiter.MockitoExtension;
+
+import java.util.List;
+
+import static org.mockito.ArgumentMatchers.anyString;
+import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class CacheRedisTest {
@@ -19,13 +27,22 @@ class CacheRedisTest {
     private RedisDataSource dataSource;
 
     @Mock
-    private ReactiveRedisDataSource reactiveDataSource;
+    private ReactiveRedisDataSource dataSourceReactive;
+
+    @Mock
+    private ReactiveKeyCommands<String> cacheKeys;
+
+    @Mock
+    private StringCommands<String, Object> stringCommands;
 
     private GerenciadorCache cache;
 
     @BeforeEach
-    void setUp() {
-        // this.cache = new CacheRedis(CacheRedisMock.StringCommands(), reactiveDataSource);
+    public void setUp() {
+        when(dataSourceReactive.key()).thenReturn(cacheKeys);
+        when(dataSource.string(Mockito.any())).thenReturn(stringCommands);
+
+        this.cache = new CacheRedis(dataSource, dataSourceReactive);
     }
 
     @Test
@@ -33,6 +50,8 @@ class CacheRedisTest {
     void deveRetonarUmObjetoDoCacheDadoUmaChaveValida() {
         final var request = new UrlRequest();
         request.setUrl("https://mock.com/asL");
+
+        when(stringCommands.get(anyString())).thenReturn(request);
 
         final var requestCache = (UrlRequest) cache.get("CHAVE_1");
 
@@ -46,7 +65,8 @@ class CacheRedisTest {
     void deveRetonarUmNullDoCacheDadoUmaChaveInvalida() {
         final var request = new UrlRequest();
         request.setUrl("https://mock.com/asL");
-        cache.put("CHAVE_1", request);
+
+        when(stringCommands.get(anyString())).thenReturn(null);
 
         final var requestCache = (UrlRequest) cache.get("chave_nao_existe");
 
@@ -56,11 +76,15 @@ class CacheRedisTest {
     @Test
     @DisplayName("Deve remover todos os objetos do cache")
     void deveRemoverTodosDadosNoCache() {
+        final var uniItemList = Uni
+            .createFrom()
+            .item(List.of("key_cache_1", "key_cache_2"));
+
         final var request = new UrlRequest();
         request.setUrl("https://mock.com/asL");
-        cache.put("CHAVE_1", request);
-        cache.put("CHAVE_2", request);
-        cache.put("CHAVE_3", request);
+
+        when(stringCommands.get(anyString())).thenReturn(null);
+        when(cacheKeys.keys(anyString())).thenReturn(uniItemList);
 
         cache.clear();
 
@@ -71,10 +95,5 @@ class CacheRedisTest {
         Assertions.assertNull(requestCache1);
         Assertions.assertNull(requestCache2);
         Assertions.assertNull(requestCache3);
-    }
-
-    // @AfterEach
-    void tearDown() {
-        cache.clear();
     }
 }

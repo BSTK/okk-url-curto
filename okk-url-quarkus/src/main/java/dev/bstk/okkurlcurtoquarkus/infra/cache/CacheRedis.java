@@ -12,8 +12,8 @@ public class CacheRedis implements GerenciadorCache {
 
     public CacheRedis(final RedisDataSource dataSource,
                       final ReactiveRedisDataSource reactiveDataSource) {
-        this.cacheKeys = reactiveDataSource.key();
         this.cache = dataSource.string(Object.class);
+        this.cacheKeys = reactiveDataSource.key();
     }
 
     @Override

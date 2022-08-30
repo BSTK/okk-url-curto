@@ -1,8 +1,6 @@
-package dev.bstk.okkurlcurtoquarkus.cache;
+package dev.bstk.okkurlcurtoquarkus.infra.cache;
 
 import dev.bstk.okkurlcurtoquarkus.api.request.UrlRequest;
-import dev.bstk.okkurlcurtoquarkus.infra.cache.CacheLocal;
-import dev.bstk.okkurlcurtoquarkus.infra.cache.GerenciadorCache;
 import org.junit.jupiter.api.*;
 
 class CacheLocalTest {
