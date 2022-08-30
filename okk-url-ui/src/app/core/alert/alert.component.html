@@ -1,0 +1,17 @@
+<a #hrefModal href="#modal" class="trigger-btn" data-toggle="modal"></a>
+<div id="modal" class="modal fade">
+  <div class="modal-dialog modal-confirm">
+    <div class="modal-content">
+      <div class="modal-header">
+        <div class="icon-box" [ngClass]="modalCss">
+          <i class="material-icons" [hidden]="modalCss?.includes('error')">&#xE5CD;</i>
+          <i class="material-icons" [hidden]="modalCss?.includes('sucesso')">&#xE876;</i>
+        </div>
+        <h4 class="modal-title w-100">{{ titulo }}</h4>
+      </div>
+      <div class="modal-body">
+        <p class="text-center">{{ descricao }}</p>
+      </div>
+    </div>
+  </div>
+</div>

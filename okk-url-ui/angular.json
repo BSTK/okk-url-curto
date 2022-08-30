@@ -3,7 +3,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "okk-url-ui": {
+    "game-okk-ui": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:component": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/okk-url-ui",
+            "outputPath": "dist/game-okk-ui",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -73,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "okk-url-ui:build:production"
+              "browserTarget": "game-okk-ui:build:production"
             },
             "development": {
-              "browserTarget": "okk-url-ui:build:development"
+              "browserTarget": "game-okk-ui:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "okk-url-ui:build"
+            "browserTarget": "game-okk-ui:build"
           }
         },
         "test": {
@@ -108,5 +108,5 @@
       }
     }
   },
-  "defaultProject": "okk-url-ui"
+  "defaultProject": "game-okk-ui"
 }
