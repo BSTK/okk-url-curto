@@ -8,7 +8,6 @@ import org.hibernate.validator.constraints.URL;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
-import java.util.Objects;
 
 @Data
 @JsonIgnoreProperties(ignoreUnknown = true)
@@ -22,23 +21,10 @@ public class UrlRequest implements Serializable {
     @Size(min = TAMANHO_MINIMO_DE_CARACTERES)
     private String url;
 
-    public String urlCache() {
+    public String urlChaveCache() {
         return url
             .toLowerCase()
             .replace("", " ")
             .trim();
-    }
-
-    @Override
-    public boolean equals(Object o) {
-        if (this == o) { return true; }
-        if (o == null || getClass() != o.getClass()) { return false; }
-        UrlRequest request = (UrlRequest) o;
-        return Objects.equals(url, request.url);
-    }
-
-    @Override
-    public int hashCode() {
-        return Objects.hash(url);
     }
 }

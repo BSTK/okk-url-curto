@@ -17,7 +17,8 @@ import org.mockito.junit.jupiter.MockitoExtension;
 import java.net.URI;
 import java.util.Optional;
 
-import static org.mockito.ArgumentMatchers.*;
+import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
@@ -37,33 +38,49 @@ class UrlServiceTest {
 
 
     @Test
-    @DisplayName("Deve retornar uma url com dados convertidos")
-    void deveRetonarUmaUrlComDadosConvertidos() {
+    @DisplayName("Deve encurtar uma url e retornar uma url com dados convertidos")
+    void deveEncurtarUmaUrlERetornarUmaUrlComDadosConvertidos() {
         final var urlMock = new Url();
         urlMock.setId(1L);
+        when(cache.get(anyString())).thenReturn(null);
+
+        when(repository.url(anyString())).thenReturn(Optional.empty());
         when(repository.save(any(Url.class))).thenReturn(urlMock);
+        when(repository.saveAndFlush(any(Url.class))).thenReturn(urlMock);
 
         when(qrCode.criarQrCode(anyString())).thenReturn("QRCODE_MOCK");
 
-        when(cache.get(anyInt())).thenReturn(null);
-        doNothing().when(cache).put(anyString(), any(Url.class));
-        doNothing().when(cache).put(anyInt(), any(Url.class));
+        final var urlEncurtada = urlService.encurtar(mockRequest());
+
+        assertions(urlEncurtada);
+        verify(cache, times(2)).put(anyString(), any(Url.class));
+    }
+
+    @Test
+    @DisplayName("Deve tentar encurtar uma url mas retornar uma url com dados convertidos obtidos do cache")
+    void deveTentarEncurtarUmaUrlMasRetornarUmaUrlComDadosConvertidosObtidosDoCache() {
+        when(cache.get(anyString())).thenReturn(mockUrlCache());
 
         final var urlEncurtada = urlService.encurtar(mockRequest());
+
+        verifyNoInteractions(repository, qrCode);
+        verify(cache, times(0)).put(anyString(), anyString());
 
         assertions(urlEncurtada);
     }
 
     @Test
-    @DisplayName("Deve retornar uma url com dados convertidos obtidos do cache")
-    void deveRetonarUmaUrlComDadosConvertidosObtidosDoCache() {
-        when(cache.get(anyInt())).thenReturn(mockUrlCache());
+    @DisplayName("Deve retornar uma url com dados convertidos de uma url ja cadastrada")
+    void deveTentarEncurtarMasRetornarUrlComDadosConvertidosdeUmaurlJaCadastrada() {
+        when(cache.get(anyString())).thenReturn(null);
+        when(repository.url(anyString())).thenReturn(Optional.of(mockUrlCache()));
 
         final var urlEncurtada = urlService.encurtar(mockRequest());
 
-        verifyNoInteractions(repository, qrCode);
-        verify(cache, times(0)).put(anyString(), any(Url.class));
-        verify(cache, times(0)).put(anyInt(), any(Url.class));
+        verifyNoInteractions(qrCode);
+        verify(cache, times(0)).put(anyString(), anyString());
+        verify(repository, times(0)).save(any(Url.class));
+        verify(repository, times(0)).saveAndFlush(any(Url.class));
 
         assertions(urlEncurtada);
     }

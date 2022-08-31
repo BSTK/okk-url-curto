@@ -32,7 +32,7 @@ public class UrlService {
 
 
     public Url encurtar(@Valid final UrlRequest request) {
-        final var urlCache = (Url) cache.get(request.getUrl());
+        final var urlCache = (Url) cache.get(request.urlChaveCache());
         if (Objects.nonNull(urlCache)) {
             return urlCache;
         }
@@ -54,7 +54,7 @@ public class UrlService {
         repository.saveAndFlush(urlSalva);
 
         cache.put(urlToken, urlSalva);
-        cache.put(request.getUrl(), urlSalva);
+        cache.put(request.urlChaveCache(), urlSalva);
 
         return urlSalva;
     }
