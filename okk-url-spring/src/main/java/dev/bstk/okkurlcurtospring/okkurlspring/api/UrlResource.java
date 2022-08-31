@@ -3,14 +3,13 @@ package dev.bstk.okkurlcurtospring.okkurlspring.api;
 import dev.bstk.okkurlcurtospring.okkurlspring.api.request.UrlRequest;
 import dev.bstk.okkurlcurtospring.okkurlspring.api.response.UrlResponse;
 import dev.bstk.okkurlcurtospring.okkurlspring.domain.UrlService;
+import dev.bstk.okkurlcurtospring.okkurlspring.infra.cache.GerenciadorCache;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.time.Duration;
 
 @RestController
 @RequestMapping
@@ -18,6 +17,7 @@ import java.time.Duration;
 public class UrlResource {
 
     private final UrlService urlService;
+    private final GerenciadorCache cache;
 
 
     @PostMapping("/url")
@@ -37,10 +37,8 @@ public class UrlResource {
     public ResponseEntity<Void> redirecionar(@PathVariable("url_token") final String urlToken) {
         final var urlRedirecionar = urlService.redirecionar(urlToken);
         return ResponseEntity
-            .status(HttpStatus.MOVED_PERMANENTLY)
-            .cacheControl(CacheControl.noCache().mustRevalidate())
-            .cacheControl(CacheControl.noStore().mustRevalidate())
-            .cacheControl(CacheControl.maxAge(Duration.ZERO))
+            .status(HttpStatus.FOUND)
+            /// .status(HttpStatus.MOVED_PERMANENTLY)
             .location(urlRedirecionar)
             .build();
     }

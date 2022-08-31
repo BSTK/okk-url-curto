@@ -13,6 +13,6 @@ public interface UrlRepository extends JpaRepository<Url, Long> {
     @Query("SELECT u.urlOriginal FROM Url u WHERE u.token = :token")
     Optional<String> urlOriginal(@Param("token") final String token);
 
-    @Query("SELECT u FROM Url u WHERE lower(u.urlOriginal) = trim(lower(:urlOriginal)) ")
+    @Query("SELECT u FROM Url u WHERE lower(u.urlOriginal) = lower(trim(:urlOriginal)) ")
     Optional<Url> url(@Param("urlOriginal") final String urlOriginal);
 }
