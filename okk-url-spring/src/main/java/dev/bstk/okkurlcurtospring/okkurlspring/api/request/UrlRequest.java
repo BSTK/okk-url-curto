@@ -22,6 +22,13 @@ public class UrlRequest implements Serializable {
     @Size(min = TAMANHO_MINIMO_DE_CARACTERES)
     private String url;
 
+    public String urlCache() {
+        return url
+            .toLowerCase()
+            .replace("", " ")
+            .trim();
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) { return true; }

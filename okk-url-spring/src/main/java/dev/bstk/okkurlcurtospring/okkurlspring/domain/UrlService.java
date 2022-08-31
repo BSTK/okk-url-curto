@@ -32,9 +32,14 @@ public class UrlService {
 
 
     public Url encurtar(@Valid final UrlRequest request) {
-        final var urlCache = (Url) cache.get(request.hashCode());
+        final var urlCache = (Url) cache.get(request.getUrl());
         if (Objects.nonNull(urlCache)) {
             return urlCache;
+        }
+
+        final var urlJaCadastrada = repository.url(request.getUrl());
+        if (urlJaCadastrada.isPresent()) {
+            return urlJaCadastrada.get();
         }
 
         final var urlSalva = repository.save(new Url());
@@ -46,9 +51,10 @@ public class UrlService {
         urlSalva.setUrlOriginal(request.getUrl());
         urlSalva.setUrlEncurtada(urlEncurtada);
         urlSalva.setUrlOriginalQRCode(urlOriginalQRCode);
+        repository.saveAndFlush(urlSalva);
 
         cache.put(urlToken, urlSalva);
-        cache.put(request.hashCode(), urlSalva);
+        cache.put(request.getUrl(), urlSalva);
 
         return urlSalva;
     }

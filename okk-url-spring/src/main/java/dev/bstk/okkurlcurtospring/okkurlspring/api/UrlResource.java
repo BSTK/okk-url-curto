@@ -4,11 +4,13 @@ import dev.bstk.okkurlcurtospring.okkurlspring.api.request.UrlRequest;
 import dev.bstk.okkurlcurtospring.okkurlspring.api.response.UrlResponse;
 import dev.bstk.okkurlcurtospring.okkurlspring.domain.UrlService;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.CacheControl;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.time.Duration;
 
 @RestController
 @RequestMapping
@@ -36,6 +38,9 @@ public class UrlResource {
         final var urlRedirecionar = urlService.redirecionar(urlToken);
         return ResponseEntity
             .status(HttpStatus.MOVED_PERMANENTLY)
+            .cacheControl(CacheControl.noCache().mustRevalidate())
+            .cacheControl(CacheControl.noStore().mustRevalidate())
+            .cacheControl(CacheControl.maxAge(Duration.ZERO))
             .location(urlRedirecionar)
             .build();
     }

@@ -1,0 +1,29 @@
+version: "3"
+
+services:
+
+  # ProtgreSql
+  banco-dados:
+    image: "postgres:14.1"
+    container_name: "cantainer-okk-url-postgresql"
+    ports:
+      - "5432:5432"
+    environment:
+      - "POSTGRES_DB=okk-url-db"
+      - "POSTGRES_USER=okk-url-db"
+      - "POSTGRES_PASSWORD=okk-url-db"
+
+  # Cache Redis
+  cache:
+    image: redis:6.2-alpine
+    container_name: "cantainer-okk-url-redis"
+    restart: always
+    ports:
+      - "6379:6379"
+    command: redis-server --save 20 1
+    volumes:
+      - cache:/data
+
+volumes:
+  cache:
+    driver: local
