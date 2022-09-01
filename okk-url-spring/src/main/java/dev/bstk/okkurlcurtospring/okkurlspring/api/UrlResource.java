@@ -3,7 +3,6 @@ package dev.bstk.okkurlcurtospring.okkurlspring.api;
 import dev.bstk.okkurlcurtospring.okkurlspring.api.request.UrlRequest;
 import dev.bstk.okkurlcurtospring.okkurlspring.api.response.UrlResponse;
 import dev.bstk.okkurlcurtospring.okkurlspring.domain.UrlService;
-import dev.bstk.okkurlcurtospring.okkurlspring.infra.cache.GerenciadorCache;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,7 +16,6 @@ import javax.validation.Valid;
 public class UrlResource {
 
     private final UrlService urlService;
-    private final GerenciadorCache cache;
 
 
     @PostMapping("/url")
@@ -38,7 +36,6 @@ public class UrlResource {
         final var urlRedirecionar = urlService.redirecionar(urlToken);
         return ResponseEntity
             .status(HttpStatus.FOUND)
-            /// .status(HttpStatus.MOVED_PERMANENTLY)
             .location(urlRedirecionar)
             .build();
     }

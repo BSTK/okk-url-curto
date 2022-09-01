@@ -37,7 +37,7 @@ public class UrlResource {
     public Response redirecionar(@PathParam("url_token") final String urlToken) {
         final var urlRedirecionar = urlService.redirecionar(urlToken);
         return Response
-            .status(Response.Status.MOVED_PERMANENTLY)
+            .status(Response.Status.FOUND)
             .location(urlRedirecionar)
             .build();
     }

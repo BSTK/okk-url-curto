@@ -105,7 +105,7 @@ class UrlResourceTest {
 
         mockMvc.perform(
                 get(ENDPOINT_REDIRECIONAR_URL, "mockId"))
-            .andExpect(status().isMovedPermanently())
+            .andExpect(status().isFound())
             .andExpect(redirectedUrl("https://www.mock-url.com.br"));
     }
 
