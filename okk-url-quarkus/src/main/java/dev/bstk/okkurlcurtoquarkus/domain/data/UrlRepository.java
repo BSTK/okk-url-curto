@@ -15,6 +15,6 @@ public class UrlRepository implements PanacheRepository<Url> {
     }
 
     public Optional<Url> url(final String urlOriginal) {
-        return find("SELECT u FROM Url u WHERE lower(u.urlOriginal) = lower(trim(:urlOriginal))", urlOriginal).firstResultOptional();
+        return find("lower(trim(urlOriginal))", urlOriginal).firstResultOptional();
     }
 }

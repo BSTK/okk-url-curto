@@ -59,13 +59,29 @@ class UrlServiceTest {
     @Test
     @DisplayName("Deve retornar uma url com dados convertidos obtidos do cache")
     void deveRetonarUmaUrlComDadosConvertidosObtidosDoCache() {
-        when(cache.get(anyInt())).thenReturn(mockUrlCache());
+        when(cache.get(anyString())).thenReturn(mockUrlCache());
 
         final var urlEncurtada = urlService.encurtar(mockRequest());
 
         verifyNoInteractions(repository, qrCode);
         verify(cache, times(0)).put(anyString(), any(Url.class));
-        verify(cache, times(0)).put(anyInt(), any(Url.class));
+        verify(cache, times(0)).put(anyString(), any(Url.class));
+
+        assertions(urlEncurtada);
+    }
+
+    @Test
+    @DisplayName("Deve retornar uma url com dados convertidos de uma url ja cadastrada")
+    void deveTentarEncurtarMasRetornarUrlComDadosConvertidosdeUmaurlJaCadastrada() {
+        when(cache.get(anyString())).thenReturn(null);
+        when(repository.url(anyString())).thenReturn(Optional.of(mockUrlCache()));
+
+        final var urlEncurtada = urlService.encurtar(mockRequest());
+
+        verifyNoInteractions(qrCode);
+        verify(cache, times(0)).put(anyString(), anyString());
+        verify(repository, times(0)).persist(any(Url.class));
+        verify(repository, times(0)).persist(any(Url.class));
 
         assertions(urlEncurtada);
     }
