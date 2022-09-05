@@ -36,9 +36,9 @@ public class CacheRedis implements GerenciadorCache {
 
             final var json = MAPPER.readValue(jsonCache.toString(), ObjectNode.class);
             final var jsonValor = json.get(OBJETO_JSON_VALOR).asText();
-            final var jsonClazz = Class.forName(json.get(OBJETO_JSON_CLASS).asText());
+            final var jsonClass = Class.forName(json.get(OBJETO_JSON_CLASS).asText());
 
-            return MAPPER.readValue(jsonValor, jsonClazz);
+            return MAPPER.readValue(jsonValor, jsonClass);
         } catch (Exception e) {
             throw new CacheException("[ Redis ] - Erro ao ler valor do cache!");
         }

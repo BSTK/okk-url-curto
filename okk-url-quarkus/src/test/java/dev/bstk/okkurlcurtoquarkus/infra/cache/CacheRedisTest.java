@@ -1,5 +1,8 @@
 package dev.bstk.okkurlcurtoquarkus.infra.cache;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 import dev.bstk.okkurlcurtoquarkus.api.request.UrlRequest;
 import io.quarkus.redis.datasource.ReactiveRedisDataSource;
 import io.quarkus.redis.datasource.RedisDataSource;
@@ -47,11 +50,16 @@ class CacheRedisTest {
 
     @Test
     @DisplayName("Deve retonar um objeto do cache dado uma chave valida")
-    void deveRetonarUmObjetoDoCacheDadoUmaChaveValida() {
+    void deveRetonarUmObjetoDoCacheDadoUmaChaveValida() throws JsonProcessingException {
         final var request = new UrlRequest();
         request.setUrl("https://mock.com/asL");
 
-        when(stringCommands.get(anyString())).thenReturn(request);
+        final var mapper = new ObjectMapper();
+        final var json = mapper.createObjectNode();
+        json.put("valor", mapper.writeValueAsString(request));
+        json.put("class", request.getClass().toString().replace("class", "").trim());
+
+        when(stringCommands.get(anyString())).thenReturn(json);
 
         final var requestCache = (UrlRequest) cache.get("CHAVE_1");
 
