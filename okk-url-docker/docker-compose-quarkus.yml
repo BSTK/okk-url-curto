@@ -2,6 +2,13 @@ version: "3"
 
 services:
 
+  # Okk Url Ui
+  okk-url-ui:
+    image: "bstk/okk-url-ui:latest"
+    container_name: "cantainer-okk-url-ui"
+    ports:
+      - "4200:80"
+
   # ProtgreSql
   banco-dados:
     image: "postgres:14.1"

@@ -25,7 +25,7 @@ module.exports = function (config) {
       suppressAll: true // removes the duplicated traces
     },
     coverageReporter: {
-      dir: require('path').join(__dirname, './coverage/game-okk-ui'),
+      dir: require('path').join(__dirname, './coverage/okk-url-ui'),
       subdir: '.',
       reporters: [
         { type: 'html' },
