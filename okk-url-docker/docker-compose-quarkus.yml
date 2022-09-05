@@ -9,6 +9,15 @@ services:
     ports:
       - "4200:80"
 
+  # Okk Url Quarkus
+  okk-url-backend:
+    image: "bstk/okk-url-quarkus"
+    container_name: "cantainer-okk-url-quarkus"
+    ports:
+      - "8080:8080"
+    environment:
+      - "QUARKUS_PROFILE=prod"
+
   # ProtgreSql
   banco-dados:
     image: "postgres:14.1"
