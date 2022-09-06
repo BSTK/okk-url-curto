@@ -5,41 +5,71 @@ services:
   # Okk Url Ui
   okk-url-ui:
     image: "bstk/okk-url-ui:latest"
-    container_name: "cantainer-okk-url-ui"
+    container_name: "okk-url-ui"
     ports:
       - "4200:80"
 
   # Okk Url Quarkus
   okk-url-backend:
     image: "bstk/okk-url-quarkus"
-    container_name: "cantainer-okk-url-quarkus"
+    container_name: "okk-url-quarkus"
     ports:
       - "8080:8080"
+    depends_on:
+      redis:
+        condition: service_healthy
+      postgresql:
+        condition: service_healthy
     environment:
       - "QUARKUS_PROFILE=prod"
+      - "QUARKUS_REDIS_HOSTS=redis://redis:6379"
+      - "QUARKUS_DATASOURCE_JDBC_URL=jdbc:postgresql://postgresql:5432/okk-url-db"
+      - "QUARKUS_DATASOURCE_DB-KIND=postgresql"
+      - "QUARKUS_DATASOURCE_USERNAME=okk-url-db"
+      - "QUARKUS_DATASOURCE_PASSWORD=okk-url-db"
+    networks:
+      - okk-url
 
   # ProtgreSql
-  banco-dados:
+  postgresql:
     image: "postgres:14.1"
-    container_name: "cantainer-okk-url-postgresql"
+    container_name: "okk-url-postgresql"
     ports:
       - "5432:5432"
+    networks:
+      - okk-url
     environment:
       - "POSTGRES_DB=okk-url-db"
       - "POSTGRES_USER=okk-url-db"
       - "POSTGRES_PASSWORD=okk-url-db"
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U quarkus"]
+      interval: 5s
+      timeout: 5s
+      retries: 6
 
   # Cache Redis
-  cache:
+  redis:
     image: redis:6.2-alpine
-    container_name: "cantainer-okk-url-redis"
+    container_name: "okk-url-redis"
     restart: always
     ports:
       - "6379:6379"
+    networks:
+      - okk-url
     command: redis-server --save 20 1
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 1s
+      timeout: 3s
+      retries: 30
     volumes:
       - cache:/data
 
 volumes:
   cache:
     driver: local
+
+networks:
+  okk-url:
+    driver: bridge
