@@ -21,7 +21,8 @@ services:
       postgresql:
         condition: service_healthy
     environment:
-      - "SPRING.REDIS.HOST=redis"
+      - "SPRING_REDIS_HOST=redis"
+      - "SPRING_PROFILES_ACTIVE=dev"
       - "SPRING_DATASOURCE_URL=jdbc:postgresql://postgresql:5432/okk-url-db"
 
     networks:
