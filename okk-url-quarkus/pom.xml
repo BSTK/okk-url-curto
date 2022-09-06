@@ -87,6 +87,12 @@
             <artifactId>quarkus-jdbc-postgresql</artifactId>
         </dependency>
 
+        <!-- Java AWT -->
+        <dependency>
+            <groupId>io.quarkus</groupId>
+            <artifactId>quarkus-awt</artifactId>
+        </dependency>
+
         <!-- Redis -->
         <dependency>
             <groupId>io.quarkus</groupId>
