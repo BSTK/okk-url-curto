@@ -1,6 +1,5 @@
 # Okk Url
 
-- [Okk Url](#okk-url)
 - [Visão Geral](#visão-geral)
 - [Arquitetura](#arquitetura)
     - [Cache](#cache)
